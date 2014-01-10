@@ -1,0 +1,10 @@
+﻿@model WeatherApp.ViewModels.Message
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<h2>Error</h2>
+<p>Ett fel inträffade.</p>
+@Html.DisplayFor(model => model.ErrorMessage)
