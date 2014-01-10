@@ -1,0 +1,33 @@
+﻿@model WeatherApp.ViewModels.Forecast
+
+@{
+    ViewBag.Title = "Weather";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<h3 class="location">@Model.LocationName</h3>
+<table>
+    <tr class="forecast">
+        @foreach (var item in Model.WeatherForecast)
+        {
+            var src = Model.WeatherIconURL(item.WeatherIcon);
+            var day = Model.GetDay(item.Date);
+                <td class="weather">
+                    <p class="day">@day</p>
+                    <p>
+                        <img src="@src" />
+                    </p>
+                    <p class="temperature"> 
+                        @Html.DisplayFor(modelItem => item.Degree)
+                         °C
+                    </p>
+                </td>
+        }
+    </tr>
+    <tr>
+        <td>
+            <br />
+            @Html.ActionLink("Sök igen", "Index")
+        </td>
+    </tr>
+</table>

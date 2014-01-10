@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WeatherAppModelsDataModelsStoreContainer" CdmEntityContainer="jb222qp_weatherEntities">
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Location">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="WeatherApp.Models.DataModels.Store.AddLocation">
+            <ScalarProperty Name="Longitude" ParameterName="longitude" />
+            <ScalarProperty Name="Latitude" ParameterName="latitude" />
+            <ScalarProperty Name="Name" ParameterName="name" />
+            <ScalarProperty Name="LocationID" ParameterName="locationID" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="WeatherApp.Models.DataModels.Store.UpdateLocation">
+            <ScalarProperty Name="Longitude" ParameterName="longitude" Version="Current" />
+            <ScalarProperty Name="Latitude" ParameterName="latitude" Version="Current" />
+            <ScalarProperty Name="Name" ParameterName="name" Version="Current" />
+            <ScalarProperty Name="LocationID" ParameterName="locationID" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="WeatherApp.Models.DataModels.Store.DeleteLocation">
+            <ScalarProperty Name="LocationID" ParameterName="locationID" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Weathers">
+      <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Weather">
+        <MappingFragment StoreEntitySet="Weather">
+          <ScalarProperty Name="WeatherID" ColumnName="WeatherID" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="WeatherIcon" ColumnName="WeatherIcon" />
+          <ScalarProperty Name="Degree" ColumnName="Degree" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Weather">
+        <ModificationFunctionMapping>
+          <UpdateFunction FunctionName="WeatherApp.Models.DataModels.Store.UpdateWeather">
+            <ScalarProperty Name="Degree" ParameterName="degree" Version="Current" />
+            <ScalarProperty Name="WeatherIcon" ParameterName="weatherIcon" Version="Current" />
+            <ScalarProperty Name="Date" ParameterName="date" Version="Current" />
+            <ScalarProperty Name="LocationID" ParameterName="locationID" Version="Current" />
+            <ScalarProperty Name="WeatherID" ParameterName="weatherID" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="WeatherApp.Models.DataModels.Store.DeleteWeather">
+            <ScalarProperty Name="WeatherID" ParameterName="weatherID" />
+          </DeleteFunction>
+          <InsertFunction FunctionName="WeatherApp.Models.DataModels.Store.AddWeather">
+            <ScalarProperty Name="Degree" ParameterName="degree" />
+            <ScalarProperty Name="WeatherIcon" ParameterName="weatherIcon" />
+            <ScalarProperty Name="Date" ParameterName="date" />
+            <ScalarProperty Name="LocationID" ParameterName="locationID" />
+            <ResultBinding Name="WeatherID" ColumnName="NewWeatherID" />
+          </InsertFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

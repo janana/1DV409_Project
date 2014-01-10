@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WeatherApp.Models.DataModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="WeatherAppModelsDataModelsStoreContainer">
+          <EntitySet Name="Location" EntityType="WeatherApp.Models.DataModels.Store.Location" store:Type="Tables" Schema="app" />
+          <EntitySet Name="Weather" EntityType="WeatherApp.Models.DataModels.Store.Weather" store:Type="Tables" Schema="app" />
+          <AssociationSet Name="FK_Weather_Location" Association="WeatherApp.Models.DataModels.Store.FK_Weather_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Weather" EntitySet="Weather" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Latitude" Type="decimal" Nullable="false" Scale="7" />
+          <Property Name="Longitude" Type="decimal" Nullable="false" Scale="7" />
+        </EntityType>
+        <EntityType Name="Weather">
+          <Key>
+            <PropertyRef Name="WeatherID" />
+          </Key>
+          <Property Name="WeatherID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Nullable="false" />
+          <Property Name="WeatherIcon" Type="char" Nullable="false" MaxLength="5" />
+          <Property Name="Degree" Type="decimal" Nullable="false" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Weather_Location">
+          <End Role="Location" Type="WeatherApp.Models.DataModels.Store.Location" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Weather" Type="WeatherApp.Models.DataModels.Store.Weather" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Weather">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="locationID" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="latitude" Type="decimal" Mode="In" />
+          <Parameter Name="longitude" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="AddWeather" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="locationID" Type="int" Mode="In" />
+          <Parameter Name="date" Type="datetime2" Mode="In" />
+          <Parameter Name="weatherIcon" Type="char" Mode="In" />
+          <Parameter Name="degree" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="DeleteLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="locationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteWeather" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="weatherID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SelectLocationByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="locationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SelectLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app" />
+        <Function Name="SelectWeatherByLocationID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="locationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="locationID" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="latitude" Type="decimal" Mode="In" />
+          <Parameter Name="longitude" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="UpdateWeather" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="weatherID" Type="int" Mode="In" />
+          <Parameter Name="locationID" Type="int" Mode="In" />
+          <Parameter Name="date" Type="datetime2" Mode="In" />
+          <Parameter Name="weatherIcon" Type="char" Mode="In" />
+          <Parameter Name="degree" Type="decimal" Mode="In" />
+        </Function>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WeatherApp.Models.DataModels" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="jb222qp_weatherEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Locations" EntityType="WeatherApp.Models.DataModels.Location" />
+          <EntitySet Name="Weathers" EntityType="WeatherApp.Models.DataModels.Weather" />
+          <AssociationSet Name="FK_Weather_Location" Association="WeatherApp.Models.DataModels.FK_Weather_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Weather" EntitySet="Weathers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="18" Scale="7" />
+          <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="18" Scale="7" />
+          <NavigationProperty Name="Weathers" Relationship="WeatherApp.Models.DataModels.FK_Weather_Location" FromRole="Location" ToRole="Weather" />
+        </EntityType>
+        <EntityType Name="Weather">
+          <Key>
+            <PropertyRef Name="WeatherID" />
+          </Key>
+          <Property Name="WeatherID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="WeatherIcon" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
+          <Property Name="Degree" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Location" Relationship="WeatherApp.Models.DataModels.FK_Weather_Location" FromRole="Weather" ToRole="Location" />
+        </EntityType>
+        <Association Name="FK_Weather_Location">
+          <End Role="Location" Type="WeatherApp.Models.DataModels.Location" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Weather" Type="WeatherApp.Models.DataModels.Weather" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Weather">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WeatherAppModelsDataModelsStoreContainer" CdmEntityContainer="jb222qp_weatherEntities">
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Location">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="WeatherApp.Models.DataModels.Store.AddLocation" >
+                  <ScalarProperty Name="Longitude" ParameterName="longitude" />
+                  <ScalarProperty Name="Latitude" ParameterName="latitude" />
+                  <ScalarProperty Name="Name" ParameterName="name" />
+                  <ScalarProperty Name="LocationID" ParameterName="locationID" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="WeatherApp.Models.DataModels.Store.UpdateLocation" >
+                  <ScalarProperty Name="Longitude" ParameterName="longitude" Version="Current" />
+                  <ScalarProperty Name="Latitude" ParameterName="latitude" Version="Current" />
+                  <ScalarProperty Name="Name" ParameterName="name" Version="Current" />
+                  <ScalarProperty Name="LocationID" ParameterName="locationID" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="WeatherApp.Models.DataModels.Store.DeleteLocation" >
+                  <ScalarProperty Name="LocationID" ParameterName="locationID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Weathers">
+            <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Weather">
+              <MappingFragment StoreEntitySet="Weather">
+                <ScalarProperty Name="WeatherID" ColumnName="WeatherID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="WeatherIcon" ColumnName="WeatherIcon" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="WeatherApp.Models.DataModels.Weather">
+              <ModificationFunctionMapping>
+                <UpdateFunction FunctionName="WeatherApp.Models.DataModels.Store.UpdateWeather" >
+                  <ScalarProperty Name="Degree" ParameterName="degree" Version="Current" />
+                  <ScalarProperty Name="WeatherIcon" ParameterName="weatherIcon" Version="Current" />
+                  <ScalarProperty Name="Date" ParameterName="date" Version="Current" />
+                  <ScalarProperty Name="LocationID" ParameterName="locationID" Version="Current" />
+                  <ScalarProperty Name="WeatherID" ParameterName="weatherID" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="WeatherApp.Models.DataModels.Store.DeleteWeather" >
+                  <ScalarProperty Name="WeatherID" ParameterName="weatherID" />
+                </DeleteFunction>
+                <InsertFunction FunctionName="WeatherApp.Models.DataModels.Store.AddWeather" >
+                  <ScalarProperty Name="Degree" ParameterName="degree" />
+                  <ScalarProperty Name="WeatherIcon" ParameterName="weatherIcon" />
+                  <ScalarProperty Name="Date" ParameterName="date" />
+                  <ScalarProperty Name="LocationID" ParameterName="locationID" />
+                  <ResultBinding Name="WeatherID" ColumnName="NewWeatherID" />
+                </InsertFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeatherApp.Models.DataModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="WeatherAppModelsDataModelsStoreContainer">
+    <EntitySet Name="Location" EntityType="WeatherApp.Models.DataModels.Store.Location" store:Type="Tables" Schema="app" />
+    <EntitySet Name="Weather" EntityType="WeatherApp.Models.DataModels.Store.Weather" store:Type="Tables" Schema="app" />
+    <AssociationSet Name="FK_Weather_Location" Association="WeatherApp.Models.DataModels.Store.FK_Weather_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Weather" EntitySet="Weather" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Latitude" Type="decimal" Nullable="false" Scale="7" />
+    <Property Name="Longitude" Type="decimal" Nullable="false" Scale="7" />
+  </EntityType>
+  <EntityType Name="Weather">
+    <Key>
+      <PropertyRef Name="WeatherID" />
+    </Key>
+    <Property Name="WeatherID" Type="int" Nullable="false" />
+    <Property Name="LocationID" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime2" Nullable="false" />
+    <Property Name="WeatherIcon" Type="char" Nullable="false" MaxLength="5" />
+    <Property Name="Degree" Type="decimal" Nullable="false" Scale="2" />
+  </EntityType>
+  <Association Name="FK_Weather_Location">
+    <End Role="Location" Type="WeatherApp.Models.DataModels.Store.Location" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Weather" Type="WeatherApp.Models.DataModels.Store.Weather" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="Weather">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AddLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="locationID" Type="int" Mode="In" />
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="latitude" Type="decimal" Mode="In" />
+    <Parameter Name="longitude" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="AddWeather" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="locationID" Type="int" Mode="In" />
+    <Parameter Name="date" Type="datetime2" Mode="In" />
+    <Parameter Name="weatherIcon" Type="char" Mode="In" />
+    <Parameter Name="degree" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="DeleteLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="locationID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteWeather" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="weatherID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SelectLocationByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="locationID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SelectLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app" />
+  <Function Name="SelectWeatherByLocationID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="locationID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="locationID" Type="int" Mode="In" />
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="latitude" Type="decimal" Mode="In" />
+    <Parameter Name="longitude" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="UpdateWeather" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="weatherID" Type="int" Mode="In" />
+    <Parameter Name="locationID" Type="int" Mode="In" />
+    <Parameter Name="date" Type="datetime2" Mode="In" />
+    <Parameter Name="weatherIcon" Type="char" Mode="In" />
+    <Parameter Name="degree" Type="decimal" Mode="In" />
+  </Function>
+</Schema>

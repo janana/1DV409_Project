@@ -1,0 +1,61 @@
+﻿body
+{
+    background: #ebd0fe;
+}
+#container
+{
+    width: 900px;
+    margin: auto;
+   
+    padding: 20px 50px 50px 50px;
+    font-size: 1.2em;
+    border-left: dashed 1px black;
+    border-right: dashed 1px black;
+}
+#footer
+{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 120px;
+}
+.weather
+{
+    width: 178px;
+    text-align: center;
+    border-left: 1px solid #555;
+}
+.weather:first-child
+{
+    border-left: none;
+}
+.forecast
+{
+    border: 1px solid black;
+}
+.temperature
+{
+    font-weight: bold;
+
+    font-size: 1.5em;
+}
+.day
+{
+    font-size: 1.5em;
+}
+a
+{
+    margin: 30px;
+}
+.location
+{
+    font-size: 1.8em;
+}
+label
+{
+    padding-top: 40px;
+}
+#error
+{
+    color: red;
+    margin-top: 40px;
+}

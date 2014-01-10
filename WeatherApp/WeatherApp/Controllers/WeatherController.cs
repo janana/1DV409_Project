@@ -5,22 +5,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WeatherApp.Models;
-using WeatherApp.Models.Repository;
 using WeatherApp.ViewModels;
 
 namespace WeatherApp.Controllers
 {
     public class WeatherController : Controller
     {
-        private IRepository _repository;
+        private IWeatherService _service;
+
         public WeatherController()
-            :this(new Repository())
+            :this(new WeatherService())
         {
             // Empty!
         }
-        public WeatherController(IRepository repository)
+        public WeatherController(IWeatherService iservice)
         {
-            _repository = repository;
+            _service = iservice;
         }
 
         //
@@ -28,21 +28,32 @@ namespace WeatherApp.Controllers
 
         public ActionResult Index()
         {
-            return View("Index");
+            return View("Index", new LocationString());
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(LocationString locationString)
         {
             try
             {
-                var location = _repository.GetLocationFromString(locationString.Location);
-                var weather = _repository.GetWeatherFromLocation(location);
-                var forecast = new Forecast { 
-                                                WeatherForecast = weather,
-                                                LocationName = location.Name
-                                            };
+                if (ModelState.IsValid)
+                {
+                    var location = _service.GetLocationFromString(locationString.Location);
+                    var weather = _service.GetWeatherFromLocation(location);
+                    var forecast = new Forecast
+                    {
+                        WeatherForecast = weather,
+                        LocationName = location.Name
+                    };
 
-                return View("Weather", forecast); // Dont do that!!!
+                    return View("Weather", forecast);
+                }
+                else
+                {
+                    return View("Index", locationString);
+                }
+                
             }
             catch (Exception e)
             {

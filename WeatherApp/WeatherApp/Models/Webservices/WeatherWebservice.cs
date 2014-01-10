@@ -6,22 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Xml.Linq;
+using WeatherApp.Models;
+using WeatherApp.Models.Repository;
 
-namespace WeatherApp.Models.Repository
+namespace WeatherApp.Models.Webservices
 {
-    public class Repository : IRepository
+    public class WeatherWebservice
     {
-        //private _entities; // From db
-
-        #region Location
-        public void AddLocation(Location location)
-        {
-        
-        }
-        public void DeleteLocation(Location location)
-        {
-
-        }
         public Location GetLocationFromString(string locationString)
         {
             var URL = string.Format("http://api.geonames.org/search?name_equals={0}&country=Se&maxRows=1&username=janana", locationString);
@@ -34,21 +25,19 @@ namespace WeatherApp.Models.Repository
             }
             var doc = XDocument.Parse(xml);
             var model = (from geoname in doc.Descendants("geoname")
-                           select new Location
-                           {
-                               LocationID = int.Parse(geoname.Element("geonameId").Value),
-                               Name = geoname.Element("name").Value,
-                               Latitude = double.Parse(geoname.Element("lat").Value, CultureInfo.InvariantCulture),
-                               Longitude = double.Parse(geoname.Element("lng").Value, CultureInfo.InvariantCulture),
-                           }).ToList();
+                         select new Location
+                         {
+                             LocationID = int.Parse(geoname.Element("geonameId").Value),
+                             Name = geoname.Element("name").Value,
+                             Latitude = decimal.Parse(geoname.Element("lat").Value, CultureInfo.InvariantCulture),
+                             Longitude = decimal.Parse(geoname.Element("lng").Value, CultureInfo.InvariantCulture),
+                         }).ToList();
             if (model.Count != 1)
             {
                 throw new ApplicationException("Staden kunde inte hämtas från geonames api");
             }
             return model[0];
         }
-        #endregion
-        #region Weather
         public List<Weather> GetWeatherFromLocation(Location location)
         {
             string lat = location.Latitude.ToString();
@@ -71,41 +60,14 @@ namespace WeatherApp.Models.Repository
                              LocationID = location.LocationID,
                              Date = DateTime.Parse(time.Attribute("day").Value),
                              WeatherIcon = time.Element("symbol").Attribute("var").Value,
-                             Degree = Math.Round((double.Parse(time.Element("temperature").Attribute("eve").Value, CultureInfo.InvariantCulture) - 273.15), 2)
+                             Degree = Decimal.Round((decimal.Parse(time.Element("temperature").Attribute("eve").Value, CultureInfo.InvariantCulture) - (decimal)273.15), 2)
                          }).ToList();
             if (model.Count < 1)
             {
                 throw new ApplicationException("Väderprognosen kunde inte hämtas från OpenWeatherMap's api");
             }
-            
+
             return model;
         }
-
-        #endregion
-
-        public void Save() 
-        {
-
-        }
-
-        #region IDisposable
-        private bool _disposed = false;
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    //_entities.Dispose();
-                }
-            }
-            _disposed = true;
-        }
-        #endregion
     }
 }

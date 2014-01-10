@@ -1,0 +1,19 @@
+﻿@model WeatherApp.ViewModels.LocationString
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+<p>Välkommen till väderappen! Sök på en stad för att få fram en 5 dagars väderprognos!</p><p> Apier som används är Geonames till att hitta koordinater, och OpenWeatherMap för att få fram väderinformation.</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, string.Empty, new { id = "error" })
+    <br />
+    <label>
+        @Html.LabelFor(model => model.Location):
+        @Html.EditorFor(model => model.Location)
+    </label>
+    <input type="submit" value="Sök" />
+}
