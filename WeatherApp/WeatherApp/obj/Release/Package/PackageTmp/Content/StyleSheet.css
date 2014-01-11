@@ -1,16 +1,14 @@
 ﻿body
 {
-    background: #ebd0fe;
+    background: #f4e5ff; 
+    font-family: "Helvetica Neue";
 }
 #container
 {
     width: 900px;
     margin: auto;
-   
     padding: 20px 50px 50px 50px;
     font-size: 1.2em;
-    border-left: dashed 1px black;
-    border-right: dashed 1px black;
 }
 #footer
 {

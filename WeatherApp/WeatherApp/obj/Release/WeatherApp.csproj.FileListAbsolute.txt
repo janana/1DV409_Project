@@ -28,3 +28,4 @@ C:\Users\Cepedata\Documents\GitHub\1DV409_Project\WeatherApp\WeatherApp\bin\Syst
 C:\Users\Cepedata\Documents\GitHub\1DV409_Project\WeatherApp\WeatherApp\bin\System.Web.WebPages.Razor.xml
 C:\Users\Cepedata\Documents\GitHub\1DV409_Project\WeatherApp\WeatherApp\obj\Release\WeatherApp.dll
 C:\Users\Cepedata\Documents\GitHub\1DV409_Project\WeatherApp\WeatherApp\obj\Release\WeatherApp.pdb
+C:\Users\Cepedata\Documents\GitHub\1DV409_Project\WeatherApp\WeatherApp\obj\Release\WeatherApp.csprojResolveAssemblyReference.cache
